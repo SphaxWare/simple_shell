@@ -1,17 +1,4 @@
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <string.h>
-extern char **environ;
-
-/*prototypes*/
-void display_prompt(void);
-void get_in(char **buffer, size_t *size, char *argv[]);
-void tokenize_input(char *buffer, char *args[], char *argv[]);
-void execute_command(char *args[], char *argv[]);
+#include "shell.h"
 /**
  * display_prompt - display ($) .
  */
@@ -59,24 +46,27 @@ void get_in(char **buffer, size_t *size, char *argv[])
  * @args:   An array of strings to store the tokenized arguments.
  * @argv: for programme name
  */
-void tokenize_input(char *buffer, char *args[], char *argv[])
+void tokenize_in(char *buffer, char *args[], char *argv[])
 {
 	char *token = strtok(buffer, " \t\n");
 	int i = 0;
 
-	if (token != NULL)
+	while (token != NULL)
 	{
-		while (token != NULL)
+		args[i] = token;
+		if (args[i] == NULL)
 		{
-			args[i] = strdup(token);
-			args[i + 1] = NULL;
-			token = strtok(NULL, " \t\n");
-			i++;
+			perror(argv[0]);
+			exit(1);
 		}
-		execute_command(args, argv);
+		args[i + 1] = NULL;
+		token = strtok(NULL, " \t\n");
+		i++;
 	}
-	else
-		return;
+	if (i > 0)
+	{
+		executer(args, argv);
+	}
 }
 
 /**
@@ -86,7 +76,7 @@ void tokenize_input(char *buffer, char *args[], char *argv[])
  * @argv: programme name.
  */
 
-void execute_command(char *args[], char *argv[])
+void executer(char *args[], char *argv[])
 {
 	int status;
 	pid_t id;
@@ -129,6 +119,7 @@ int main(int argc, char *argv[])
 	{
 		print_prompt();
 		get_in(&buffer, &size, argv);
+		tokenize_in(buffer, args, argv);
 	}
 	for (i = 0; args[i] != NULL; i++)
 	{
