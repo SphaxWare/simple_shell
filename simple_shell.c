@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * display_prompt - display ($) .
+ * print_prompt - display ($) .
  */
 void print_prompt(void)
 {
@@ -9,7 +9,12 @@ void print_prompt(void)
 	if (isatty(STDIN_FILENO))
 		write(1, prompt, 4);
 }
-
+/**
+ * get_in - Reads and processes input from stdin.
+ * @buffer: A pointer to a pointer that will hold the input line.
+ * @size: A pointer to the size of the input buffer.
+ * @argv: programme name.
+ */
 void get_in(char **buffer, size_t *size, char *argv[])
 {
 	int numchar = getline(buffer, size, stdin);
@@ -41,7 +46,7 @@ void get_in(char **buffer, size_t *size, char *argv[])
 }
 
 /**
- * tokenize_input - Tokenizes a string into an array of arguments.
+ * tokenize_in - Tokenizes a string into an array of arguments.
  * @buffer: The input string to be tokenized.
  * @args:   An array of strings to store the tokenized arguments.
  * @argv: for programme name
@@ -70,7 +75,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 }
 
 /**
- * execute_command - Execute a command in a new process.
+ * executer - Execute a command in a new process.
  * @args: An array of strings representing the command and its arguments.
  * Return: The exit status of the executed command.
  * @argv: programme name.
@@ -101,6 +106,12 @@ void executer(char *args[], char *argv[])
 	else
 		wait(&status);
 }
+/**
+ * main - this is the main.
+ * @argc:we dont care about it
+ * @argv : w.
+ * Return: 0.
+ */
 int main(int argc, char *argv[])
 {
 	char *buffer = NULL;
