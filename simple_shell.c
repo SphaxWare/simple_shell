@@ -53,9 +53,12 @@ void get_in(char **buffer, size_t *size, char *argv[])
  */
 void tokenize_in(char *buffer, char *args[], char *argv[])
 {
-	char *token = strtok(buffer, " \t\n");
+	char *temp, *token = strtok(buffer, " \t\n");
 	int i = 0;
+	struct stat st;
 
+	if (strcmp(token, "exit") == 0)
+		exit(0);
 	while (token != NULL)
 	{
 		args[i] = token;
@@ -70,7 +73,20 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 	}
 	if (i > 0)
 	{
-		executer(args, argv);
+		if (stat(args[0], &st) == 0)
+		{
+			executer(args, argv);
+		}
+		else
+		{
+			if ((temp = check_path(args[0])) != NULL)
+			{
+				args[0] = temp;
+				executer(args, argv);
+			}
+			else
+				printf("%s: %s: No such file or directory\n", argv[0], args[0]);
+		}
 	}
 }
 
@@ -140,4 +156,3 @@ int main(int argc, char *argv[])
 	free(buffer);
 	return (0);
 }
-
