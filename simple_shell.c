@@ -53,40 +53,48 @@ void get_in(char **buffer, size_t *size, char *argv[])
  */
 void tokenize_in(char *buffer, char *args[], char *argv[])
 {
-	char *temp, *token = strtok(buffer, " \t\n");
+	char *token = strtok(buffer, " \t\n");
 	int i = 0;
 	struct stat st;
 
-	if (strcmp(token, "exit") == 0)
-		exit(0);
-	while (token != NULL)
+	if (token != NULL)
 	{
-		args[i] = token;
-		if (args[i] == NULL)
+		while (token != NULL)
 		{
-			perror(argv[0]);
-			exit(1);
-		}
-		args[i + 1] = NULL;
-		token = strtok(NULL, " \t\n");
-		i++;
-	}
-	if (i > 0)
-	{
-		if (stat(args[0], &st) == 0)
-		{
-			executer(args, argv);
-		}
-		else
-		{
-			if ((temp = check_path(args[0])) != NULL)
+			args[i] = token;
+			if (args[i] == NULL)
 			{
-				args[0] = temp;
+				perror(argv[0]);
+				exit(1);
+			}
+			args[i + 1] = NULL;
+			token = strtok(NULL, " \t\n");
+			i++;
+		}
+		if (i > 0)
+		{
+			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+				exit(0);
+			if (stat(args[0], &st) == 0)
+			{
 				executer(args, argv);
 			}
 			else
-				printf("%s: %s: No such file or directory\n", argv[0], args[0]);
-		}
+			{
+				if (check_path(args[0]) != NULL)
+				{
+					args[0] = check_path(args[0]);
+					executer(args, argv);
+				}
+				else
+				{
+					if (stat(args[0], &st) == -1)
+					{
+						perror(argv[0]);
+					}
+				}
+			}
+		} 
 	}
 }
 
