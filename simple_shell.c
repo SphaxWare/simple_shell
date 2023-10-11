@@ -55,7 +55,6 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 {
 	char *token = strtok(buffer, " \t\n");
 	int i = 0;
-	struct stat st;
 
 	if (token != NULL)
 	{
@@ -73,28 +72,10 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 		}
 		if (i > 0)
 		{
-			if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+			if (args[0] != NULL && i == 1 && strcmp(args[0], "exit") == 0)
 				exit(0);
-			if (stat(args[0], &st) == 0)
-			{
-				executer(args, argv);
-			}
-			else
-			{
-				if (check_path(args[0]) != NULL)
-				{
-					args[0] = check_path(args[0]);
-					executer(args, argv);
-				}
-				else
-				{
-					if (stat(args[0], &st) == -1)
-					{
-						perror(argv[0]);
-					}
-				}
-			}
-		} 
+			pathfinder(args, argv);
+		}
 	}
 }
 

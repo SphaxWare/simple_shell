@@ -45,3 +45,47 @@ char *check_path(char *cmd)
 	}
 	return (NULL);
 }
+
+void pathfinder(char *args[], char *argv[])
+{
+	struct stat st;
+	int j;
+
+	for (j = 0; args[j] != NULL;j++)
+	{
+		if (args[j] != NULL && strcmp(args[j], "exit") == 0)
+		{
+			exit(2);
+		}
+	}
+	if (stat(args[0], &st) == 0)
+	{
+		executer(args, argv);
+	}
+	else
+	{
+		if (check_path(args[0]) != NULL)
+		{
+			args[0] = check_path(args[0]);
+			executer(args, argv);
+		}
+		else
+		{
+			if (stat(args[0], &st) == -1) 
+			{
+				_printf("%s: 1: %s: not found\n", argv[0], args[0]);
+				exit(127);
+			}
+
+		}
+	}
+}
+/*void printenv(void)
+  {
+  int i = 0;
+
+  for (i = 0; environ[i] != NULL; ++i)
+  {
+  _printf("%s\n", environ[i]);
+  }
+  }*/
