@@ -1,28 +1,40 @@
 #include "shell.h"
 
 
-
+/**
+ * *_getenv - get env.
+ * @name: env
+ * Return: env or NULL.
+ */
 char *_getenv(const char *name)
 {
 	int i = 0;
+
 	while (environ[i] != NULL)
 	{
 		char *env = strdup(environ[i]);
+
 		if (env != NULL)
 		{
 			char *key = strtok(env, "=");
 			char *value = strtok(NULL, "=");
+
 			if (strcmp(key, name) == 0)
 			{
-				return value;
+				return (value);
 			}
 			free(env);
 		}
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
+/**
+ * *check_path - get cmd.
+ * @cmd: command
+ * Return: command or NULL.
+ */
 char *check_path(char *cmd)
 {
 	char *path = _getenv("PATH");
@@ -30,7 +42,7 @@ char *check_path(char *cmd)
 	char *cmd_path;
 	struct stat st;
 
-	while(dir != NULL)
+	while (dir != NULL)
 	{
 		cmd_path = malloc(strlen(dir) + strlen(cmd) + 2);
 		strcpy(cmd_path, dir);
@@ -38,20 +50,24 @@ char *check_path(char *cmd)
 		strcat(cmd_path, cmd);
 		if (stat(cmd_path, &st) == 0)
 		{
-			return(cmd_path);
+			return (cmd_path);
 		}
 		free(cmd_path);
 		dir = strtok(NULL, ":");
 	}
 	return (NULL);
 }
-
+/**
+ * *pathfinder - find paths.
+ * @args: ..
+ * @argv: ..
+ */
 void pathfinder(char *args[], char *argv[])
 {
 	struct stat st;
 	int j;
 
-	for (j = 0; args[j] != NULL;j++)
+	for (j = 0; args[j] != NULL; j++)
 	{
 		if (args[j] != NULL && strcmp(args[j], "exit") == 0)
 		{
@@ -71,7 +87,7 @@ void pathfinder(char *args[], char *argv[])
 		}
 		else
 		{
-			if (stat(args[0], &st) == -1) 
+			if (stat(args[0], &st) == -1)
 			{
 				_printf("%s: 1: %s: not found\n", argv[0], args[0]);
 				exit(127);
@@ -80,12 +96,14 @@ void pathfinder(char *args[], char *argv[])
 		}
 	}
 }
-/*void printenv(void)
-  {
-  int i = 0;
-
-  for (i = 0; environ[i] != NULL; ++i)
-  {
-  _printf("%s\n", environ[i]);
-  }
-  }*/
+/*
+ * void printenv(void)
+ * {
+ * int i = 0;
+ *
+ *for (i = 0; environ[i] != NULL; ++i)
+ *{
+ *_printf("%s\n", environ[i]);
+ * }
+ *  }
+ */
