@@ -12,4 +12,9 @@ int print_str(va_list lkm, int cnt);
 int print_char(va_list lkm, int cnt);
 int str_rev(va_list lkm, int cnt);
 
+int __putchar(char c);
+int _printfstdout(const char *format, ...);
+int _print_num(va_list lkm, int cnt);
+int _print_str(va_list lkm, int cnt);
+int _print_char(va_list lkm, int cnt);
 #endif

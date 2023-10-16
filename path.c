@@ -92,7 +92,6 @@ void pathfinder(char *args[], char *argv[])
 				_printf("%s: 1: %s: not found\n", argv[0], args[0]);
 				exit(127);
 			}
-
 		}
 	}
 }

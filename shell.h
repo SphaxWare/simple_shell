@@ -18,4 +18,5 @@ void executer(char *args[], char *argv[]);
 char *_getenv(const char *name);
 char *check_path(char *cmd);
 void pathfinder(char *args[], char *argv[]);
+void printenv(void);
 #endif
