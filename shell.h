@@ -21,4 +21,6 @@ void pathfinder(char *args[], char *argv[]);
 void printenv(void);
 int _atoi(char *s);
 int myexit(int status);
+void cmdexe(char *args[], char *argv[], int i, int count);
+int _setenv(const char *name, const char *value);
 #endif

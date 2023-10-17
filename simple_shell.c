@@ -75,12 +75,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 		}
 		if (i > 0)
 		{
-			if (args[0] != NULL && i == 1 && count == 1 && strcmp(args[0], "exit") == 0)
-				exit(0);
-			if (args[0] != NULL && i == 1 && strcmp(args[0], "env") == 0)
-				printenv();
-			else
-				pathfinder(args, argv);
+			cmdexe(args, argv, i, count);
 		}
 	}
 }

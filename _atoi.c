@@ -27,7 +27,7 @@ int _atoi(char *s)
 		i++;
 	}
 	if (!processed_digit)
-        	return -1;
+		return (-1);
 	res *= sign;
 	return (res);
 }

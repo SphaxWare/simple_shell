@@ -101,7 +101,11 @@ void pathfinder(char *args[], char *argv[])
 		}
 	}
 }
-
+/**
+ * myexit - code down below
+ * @status: exit code
+ * Return: exit code
+ */
 int myexit(int status)
 {
 	if (status == -1)
@@ -116,4 +120,16 @@ int myexit(int status)
 	else
 		exit(status);
 	return (status);
+}
+
+void cmdexe(char *args[], char *argv[], int i, int count)
+{
+	if (args[0] != NULL && i == 1 && count == 1 && strcmp(args[0], "exit") == 0)
+		exit(0);
+	if (args[0] != NULL && i == 1 && strcmp(args[0], "env") == 0)
+		printenv();
+	if (args[0] != NULL && i == 3 && strcmp(args[0], "setenv") == 0)
+		_setenv(args[1], args[2]);
+	else
+		pathfinder(args, argv);
 }
