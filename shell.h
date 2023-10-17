@@ -19,4 +19,6 @@ char *_getenv(const char *name);
 char *check_path(char *cmd);
 void pathfinder(char *args[], char *argv[]);
 void printenv(void);
+int _atoi(char *s);
+int myexit(int status);
 #endif

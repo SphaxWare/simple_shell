@@ -65,19 +65,25 @@ char *check_path(char *cmd)
 void pathfinder(char *args[], char *argv[])
 {
 	struct stat st;
-	int j;
+	int j, status;
 
 	for (j = 0; args[j] != NULL; j++)
 	{
 		if (args[j] != NULL && strcmp(args[j], "exit") == 0)
 		{
-			exit(2);
+			if (args[j + 1] != NULL)
+			{
+				status = _atoi(args[j + 1]);
+				if (status == -1)
+					_printf("./hsh: 1: exit: Illegal number: %s\n", args[j + 1]);
+				myexit(status);
+			}
+			else
+				exit(2);
 		}
 	}
 	if (stat(args[0], &st) == 0)
-	{
 		executer(args, argv);
-	}
 	else
 	{
 		if (check_path(args[0]) != NULL)
@@ -95,14 +101,19 @@ void pathfinder(char *args[], char *argv[])
 		}
 	}
 }
-/*
- * void printenv(void)
- * {
- * int i = 0;
- *
- *for (i = 0; environ[i] != NULL; ++i)
- *{
- *_printf("%s\n", environ[i]);
- * }
- *  }
- */
+
+int myexit(int status)
+{
+	if (status == -1)
+	{
+		exit(2);
+	}
+	if (status < 0)
+	{
+		_printf("./hsh: 1: exit: Illegal number: %d\n", status);
+		exit(2);
+	}
+	else
+		exit(status);
+	return (status);
+}

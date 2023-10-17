@@ -55,7 +55,10 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 {
 	char *token = strtok(buffer, " \t\n");
 	int i = 0;
+	static int count;
 
+	if (!count)
+		count = 0;
 	if (token != NULL)
 	{
 		while (token != NULL)
@@ -68,11 +71,11 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 			}
 			args[i + 1] = NULL;
 			token = strtok(NULL, " \t\n");
-			i++;
+			i++, count++;
 		}
 		if (i > 0)
 		{
-			if (args[0] != NULL && i == 1 && strcmp(args[0], "exit") == 0)
+			if (args[0] != NULL && i == 1 && count == 1 && strcmp(args[0], "exit") == 0)
 				exit(0);
 			if (args[0] != NULL && i == 1 && strcmp(args[0], "env") == 0)
 				printenv();
