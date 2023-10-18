@@ -26,8 +26,10 @@ void get_in(char **buffer, size_t *size, char *argv[])
 			if (isatty(STDIN_FILENO))
 			{
 				write(1, "\n", 1);
+				free(*buffer);
 				exit(0);
 			}
+			free(*buffer);
 			exit(0);
 		}
 		free(*buffer);
