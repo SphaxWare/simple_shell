@@ -122,6 +122,13 @@ int myexit(int status)
 	return (status);
 }
 
+/**
+ * cmdexe - code down below
+ * @args: args
+ * @argv: argv
+ * @i: integer
+ * @count: counter
+ */
 void cmdexe(char *args[], char *argv[], int i, int count)
 {
 	if (args[0] != NULL && i == 1 && count == 1 && strcmp(args[0], "exit") == 0)

@@ -12,43 +12,51 @@ void printenv(void)
 	}
 }
 
+/**
+ * _setenv - code below
+ * @name: name of env
+ * @value: value of env
+ * Return: integer
+ */
 int _setenv(const char *name, const char *value)
 {
-        int i = 0;
-        char *envar;
+	int i = 0;
+	char *envar;
 
 	if (name == NULL)
 		_printf("Error : envirement name is missing");
 	if (value == NULL)
 		_printf("Error : envirement value is missing");
-        envar = malloc(strlen(name) + strlen(value) + 2);
-        if (envar == NULL) {
-                perror("Error :");
-                return (-1);
-        }
-        while (environ[i] != NULL)
-        {
-                char *env = strdup(environ[i]);
-                char *key = strtok(env, "=");
-                if (strcmp(key, name) == 0)
-                {
-                        strcat(envar, name);
-                        strcat(envar, "=");
-                        strcat(envar, value);
-                        environ[i] = envar;
-                        free(env);
-                        return(0);
-                }
+	envar = malloc(strlen(name) + strlen(value) + 2);
+	if (envar == NULL)
+	{
+		perror("Error :");
+		return (-1);
+	}
+	while (environ[i] != NULL)
+	{
+		char *env = strdup(environ[i]);
+		char *key = strtok(env, "=");
+
+		if (strcmp(key, name) == 0)
+		{
+			strcat(envar, name);
+			strcat(envar, "=");
+			strcat(envar, value);
+			environ[i] = envar;
+			free(env);
+			return (0);
+		}
 		else
 		{
-                	free(env);
-                	i++;
+			free(env);
+			i++;
 		}
-        }
-        strcat(envar, name);
-        strcat(envar, "=");
-        strcat(envar, value);
-        environ[i] = envar;
-        environ[i + 1] = NULL;
-        return (0);
+	}
+	strcat(envar, name);
+	strcat(envar, "=");
+	strcat(envar, value);
+	environ[i] = envar;
+	environ[i + 1] = NULL;
+	return (0);
 }
