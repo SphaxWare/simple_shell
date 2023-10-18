@@ -12,14 +12,14 @@ char *_getenv(const char *name)
 
 	while (environ[i] != NULL)
 	{
-		char *env = strdup(environ[i]);
+		char *env = _strdup(environ[i]);
 
 		if (env != NULL)
 		{
 			char *key = strtok(env, "=");
 			char *value = strtok(NULL, "=");
 
-			if (strcmp(key, name) == 0)
+			if (_strcmp(key, name) == 0)
 			{
 				return (value);
 			}
@@ -45,9 +45,9 @@ char *check_path(char *cmd)
 	while (dir != NULL)
 	{
 		cmd_path = malloc(strlen(dir) + strlen(cmd) + 2);
-		strcpy(cmd_path, dir);
-		strcat(cmd_path, "/");
-		strcat(cmd_path, cmd);
+		_strcpy(cmd_path, dir);
+		_strcat(cmd_path, "/");
+		_strcat(cmd_path, cmd);
 		if (stat(cmd_path, &st) == 0)
 		{
 			return (cmd_path);
@@ -69,7 +69,7 @@ void pathfinder(char *args[], char *argv[])
 
 	for (j = 0; args[j] != NULL; j++)
 	{
-		if (args[j] != NULL && strcmp(args[j], "exit") == 0)
+		if (args[j] != NULL && _strcmp(args[j], "exit") == 0)
 		{
 			if (args[j + 1] != NULL)
 			{
@@ -131,11 +131,11 @@ int myexit(int status)
  */
 void cmdexe(char *args[], char *argv[], int i, int count)
 {
-	if (args[0] != NULL && i == 1 && count == 1 && strcmp(args[0], "exit") == 0)
+	if (args[0] != NULL && i == 1 && count == 1 && _strcmp(args[0], "exit") == 0)
 		exit(0);
-	if (args[0] != NULL && i == 1 && strcmp(args[0], "env") == 0)
+	if (args[0] != NULL && i == 1 && _strcmp(args[0], "env") == 0)
 		printenv();
-	if (args[0] != NULL && i == 3 && strcmp(args[0], "setenv") == 0)
+	if (args[0] != NULL && i == 3 && _strcmp(args[0], "setenv") == 0)
 		_setenv(args[1], args[2]);
 	else
 		pathfinder(args, argv);

@@ -23,4 +23,12 @@ int _atoi(char *s);
 int myexit(int status);
 void cmdexe(char *args[], char *argv[], int i, int count);
 int _setenv(const char *name, const char *value);
+
+/*strings*/
+
+int _strcmp(const char *s1, const char *s2);
+char *_strcpy(char *dest, char *src);
+char *_strcat(char *dest, const char *src);
+int _strlen(char *s);
+char *_strdup(char *str);
 #endif

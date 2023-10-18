@@ -35,14 +35,14 @@ int _setenv(const char *name, const char *value)
 	}
 	while (environ[i] != NULL)
 	{
-		char *env = strdup(environ[i]);
+		char *env = _strdup(environ[i]);
 		char *key = strtok(env, "=");
 
-		if (strcmp(key, name) == 0)
+		if (_strcmp(key, name) == 0)
 		{
-			strcat(envar, name);
-			strcat(envar, "=");
-			strcat(envar, value);
+			_strcat(envar, name);
+			_strcat(envar, "=");
+			_strcat(envar, value);
 			environ[i] = envar;
 			free(env);
 			return (0);
@@ -53,9 +53,9 @@ int _setenv(const char *name, const char *value)
 			i++;
 		}
 	}
-	strcat(envar, name);
-	strcat(envar, "=");
-	strcat(envar, value);
+	_strcat(envar, name);
+	_strcat(envar, "=");
+	_strcat(envar, value);
 	environ[i] = envar;
 	environ[i + 1] = NULL;
 	return (0);
