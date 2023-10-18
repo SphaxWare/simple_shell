@@ -17,7 +17,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[]);
 void executer(char *args[], char *argv[]);
 char *_getenv(const char *name);
 char *check_path(char *cmd);
-void pathfinder(char *args[], char *argv[]);
+void pathfinder(char *args[], char *argv[], char *buffer);
 void findcmd(char *args[], char *argv[]);
 void printenv(void);
 int _atoi(char *s);

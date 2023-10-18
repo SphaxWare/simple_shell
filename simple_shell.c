@@ -73,6 +73,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 			{
 				perror(argv[0]);
 				free(args);
+				free(buffer);
 				exit(1);
 			}
 			args[i + 1] = NULL;

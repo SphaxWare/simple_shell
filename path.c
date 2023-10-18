@@ -55,7 +55,6 @@ char *check_path(char *cmd)
 		free(cmd_path);
 		dir = strtok(NULL, ":");
 	}
-	free(cmd_path);
 	return (NULL);
 }
 /**
@@ -63,7 +62,7 @@ char *check_path(char *cmd)
  * @args: ..
  * @argv: ..
  */
-void pathfinder(char *args[], char *argv[])
+void pathfinder(char *args[], char *argv[], char *buffer)
 {
 	struct stat st;
 	int j, status;
@@ -78,10 +77,12 @@ void pathfinder(char *args[], char *argv[])
 				if (status == -1)
 					_printf("./hsh: 1: exit: Illegal number: %s\n", args[j + 1]);
 				free(args);
+				free(buffer);
 				myexit(status);
 			}
 			else
 			{
+				free(buffer);
 				free(args);
 				exit(2);
 			}
@@ -126,7 +127,6 @@ void cmdexe(char *args[], char *argv[], int i, int count, char *buffer)
 {
 	if (args[0] != NULL && i == 1 && count == 1 && _strcmp(args[0], "exit") == 0)
 	{
-		free(buffer);
 		free(args);
 		exit(0);
 	}
@@ -135,5 +135,5 @@ void cmdexe(char *args[], char *argv[], int i, int count, char *buffer)
 	if (args[0] != NULL && i == 3 && _strcmp(args[0], "setenv") == 0)
 		_setenv(args[1], args[2]);
 	else
-		pathfinder(args, argv);
+		pathfinder(args, argv, buffer);
 }
