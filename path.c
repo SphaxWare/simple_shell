@@ -55,6 +55,7 @@ char *check_path(char *cmd)
 		free(cmd_path);
 		dir = strtok(NULL, ":");
 	}
+	free(cmd_path);
 	return (NULL);
 }
 /**
@@ -76,30 +77,21 @@ void pathfinder(char *args[], char *argv[])
 				status = _atoi(args[j + 1]);
 				if (status == -1)
 					_printf("./hsh: 1: exit: Illegal number: %s\n", args[j + 1]);
+				free(args);
 				myexit(status);
 			}
 			else
+			{
+				free(args);
 				exit(2);
+			}
 		}
 	}
 	if (stat(args[0], &st) == 0)
 		executer(args, argv);
 	else
 	{
-		if (check_path(args[0]) != NULL)
-		{
-			args[0] = check_path(args[0]);
-			executer(args, argv);
-		}
-		else
-		{
-			if (stat(args[0], &st) == -1)
-			{
-				_printf("%s: 1: %s: not found\n", argv[0], args[0]);
-				free(args);
-				exit(127);
-			}
-		}
+		findcmd(args, argv);
 	}
 }
 /**
@@ -130,11 +122,12 @@ int myexit(int status)
  * @i: integer
  * @count: counter
  */
-void cmdexe(char *args[], char *argv[], int i, int count)
+void cmdexe(char *args[], char *argv[], int i, int count, char *buffer)
 {
 	if (args[0] != NULL && i == 1 && count == 1 && _strcmp(args[0], "exit") == 0)
 	{
-		freeargs(args);
+		free(buffer);
+		free(args);
 		exit(0);
 	}
 	if (args[0] != NULL && i == 1 && _strcmp(args[0], "env") == 0)

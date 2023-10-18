@@ -18,10 +18,11 @@ void executer(char *args[], char *argv[]);
 char *_getenv(const char *name);
 char *check_path(char *cmd);
 void pathfinder(char *args[], char *argv[]);
+void findcmd(char *args[], char *argv[]);
 void printenv(void);
 int _atoi(char *s);
 int myexit(int status);
-void cmdexe(char *args[], char *argv[], int i, int count);
+void cmdexe(char *args[], char *argv[], int i, int count, char *buffer);
 int _setenv(const char *name, const char *value);
 
 /*strings*/

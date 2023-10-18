@@ -35,6 +35,7 @@ void get_in(char **buffer, size_t *size, char *argv[], char* args[])
 			exit(0);
 		}
 		free(*buffer);
+		free(args);
 		perror(argv[0]);
 	}
 	if ((*buffer)[0] == '\n')
@@ -71,6 +72,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 			if (args[i] == NULL)
 			{
 				perror(argv[0]);
+				free(args);
 				exit(1);
 			}
 			args[i + 1] = NULL;
@@ -79,7 +81,7 @@ void tokenize_in(char *buffer, char *args[], char *argv[])
 		}
 		if (i > 0)
 		{
-			cmdexe(args, argv, i, count);
+			cmdexe(args, argv, i, count, buffer);
 		}
 	}
 }
@@ -106,6 +108,7 @@ void executer(char *args[], char *argv[])
 		if (execve(args[0], args, environ) == -1)
 		{
 			perror(argv[0]);
+			free(args);
 			exit(1);
 		}
 		else
