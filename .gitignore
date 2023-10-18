@@ -1,3 +1,4 @@
 TEST_SUITE
 runchecker.bash
 script.bash
+allowed_functions
