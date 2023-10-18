@@ -12,7 +12,7 @@ extern char **environ;
 #include "main.h"
 
 void print_prompt(void);
-void get_in(char **buffer, size_t *size, char *argv[]);
+void get_in(char **buffer, size_t *size, char *argv[], char *args[]);
 void tokenize_in(char *buffer, char *args[], char *argv[]);
 void executer(char *args[], char *argv[]);
 char *_getenv(const char *name);
@@ -31,4 +31,7 @@ char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, const char *src);
 int _strlen(char *s);
 char *_strdup(char *str);
+
+/*free args*/
+void freeargs(char *args[]);
 #endif

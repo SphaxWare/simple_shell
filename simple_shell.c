@@ -15,7 +15,7 @@ void print_prompt(void)
  * @size: A pointer to the size of the input buffer.
  * @argv: programme name.
  */
-void get_in(char **buffer, size_t *size, char *argv[])
+void get_in(char **buffer, size_t *size, char *argv[], char* args[])
 {
 	int numchar = getline(buffer, size, stdin);
 
@@ -26,9 +26,11 @@ void get_in(char **buffer, size_t *size, char *argv[])
 			if (isatty(STDIN_FILENO))
 			{
 				write(1, "\n", 1);
+				free(args);
 				free(*buffer);
 				exit(0);
 			}
+			free(args);
 			free(*buffer);
 			exit(0);
 		}
@@ -38,7 +40,7 @@ void get_in(char **buffer, size_t *size, char *argv[])
 	if ((*buffer)[0] == '\n')
 	{
 		print_prompt();
-		get_in(buffer, size, argv);
+		get_in(buffer, size, argv, args);
 	}
 
 	if ((*buffer)[numchar - 1] == '\n')
@@ -108,6 +110,7 @@ void executer(char *args[], char *argv[])
 		}
 		else
 		{
+			free(args);
 			exit(0);
 		}
 	}
@@ -137,7 +140,7 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		print_prompt();
-		get_in(&buffer, &size, argv);
+		get_in(&buffer, &size, argv, args);
 		tokenize_in(buffer, args, argv);
 	}
 	for (i = 0; args[i] != NULL; i++)

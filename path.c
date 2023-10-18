@@ -96,6 +96,7 @@ void pathfinder(char *args[], char *argv[])
 			if (stat(args[0], &st) == -1)
 			{
 				_printf("%s: 1: %s: not found\n", argv[0], args[0]);
+				free(args);
 				exit(127);
 			}
 		}
@@ -132,7 +133,10 @@ int myexit(int status)
 void cmdexe(char *args[], char *argv[], int i, int count)
 {
 	if (args[0] != NULL && i == 1 && count == 1 && _strcmp(args[0], "exit") == 0)
+	{
+		freeargs(args);
 		exit(0);
+	}
 	if (args[0] != NULL && i == 1 && _strcmp(args[0], "env") == 0)
 		printenv();
 	if (args[0] != NULL && i == 3 && _strcmp(args[0], "setenv") == 0)
