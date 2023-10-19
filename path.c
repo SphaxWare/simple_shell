@@ -61,6 +61,7 @@ char *check_path(char *cmd)
  * *pathfinder - find paths.
  * @args: ..
  * @argv: ..
+ * @buffer: ..
  */
 void pathfinder(char *args[], char *argv[], char *buffer)
 {
@@ -122,6 +123,7 @@ int myexit(int status)
  * @argv: argv
  * @i: integer
  * @count: counter
+ * @buffer: ..
  */
 void cmdexe(char *args[], char *argv[], int i, int count, char *buffer)
 {

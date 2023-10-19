@@ -1,5 +1,9 @@
 #include "shell.h"
-
+/**
+ * findcmd - code.
+ * @args:...
+ * @argv:...
+ */
 void findcmd(char *args[], char *argv[])
 {
 	struct stat st;
@@ -11,7 +15,7 @@ void findcmd(char *args[], char *argv[])
 	}
 	else
 	{
-		if (stat(args[0], &st) == -1) 
+		if (stat(args[0], &st) == -1)
 		{
 			_printf("%s: 1: %s: not found\n", argv[0], args[0]);
 			free(args);

@@ -14,8 +14,9 @@ void print_prompt(void)
  * @buffer: A pointer to a pointer that will hold the input line.
  * @size: A pointer to the size of the input buffer.
  * @argv: programme name.
+ * @args: arguments
  */
-void get_in(char **buffer, size_t *size, char *argv[], char* args[])
+void get_in(char **buffer, size_t *size, char *argv[], char *args[])
 {
 	int numchar = getline(buffer, size, stdin);
 
